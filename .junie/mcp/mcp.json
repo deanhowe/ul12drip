@@ -1,0 +1,20 @@
+{
+    "mcpServers": {
+        "laravel-boost": {
+            "command": "/Users/deanhowe/Library/Application Support/Herd/bin/php84",
+            "args": [
+                "/Users/deanhowe/PLANNR/VALET/VHOSTS/laravel_db_factories/artisan",
+                "boost:mcp"
+            ]
+        },
+        "herd": {
+            "command": "/Users/deanhowe/Library/Application Support/Herd/bin/php84",
+            "args": [
+                "/Applications/Herd.app/Contents/Resources/herd-mcp.phar"
+            ],
+            "env": {
+                "SITE_PATH": "/Users/deanhowe/PLANNR/VALET/VHOSTS/laravel_db_factories"
+            }
+        }
+    }
+}
