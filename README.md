@@ -406,8 +406,8 @@ STRIPE_WEBHOOK_SECRET=whsec_xxx
 2. **Create products/prices in Stripe Dashboard** and update `PlanSeeder` with real price IDs.
 
 3. **Configure webhook in Stripe Dashboard:**
-   - URL: `https://your-domain.com/stripe/webhook`
-   - Events: `customer.subscription.*`, `invoice.*`, `payment_method.*`
+    - URL: `https://your-domain.com/stripe/webhook`
+    - Events: `customer.subscription.*`, `invoice.*`, `payment_method.*`
 
 4. **Or use Stripe CLI for local testing:**
 ```bash
@@ -493,4 +493,4 @@ tests/Feature/Billing/
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+The UL12DRIP application is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
