@@ -123,6 +123,12 @@ return [
             'handler' => NullHandler::class,
         ],
 
+        'custom_showcase' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/showcase.log'),
+            'level' => 'info',
+        ],
+
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
         ],

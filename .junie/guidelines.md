@@ -9,7 +9,10 @@ The Laravel Boost guidelines are specifically curated by Laravel maintainers for
 This application is a Laravel application and its main Laravel ecosystems package & versions are below. You are an expert with them all. Ensure you abide by these specific packages & versions.
 
 - php - 8.4.16
+- laravel/folio (FOLIO) - v1
+- laravel/fortify (FORTIFY) - v1
 - laravel/framework (LARAVEL) - v12
+- laravel/pennant (PENNANT) - v1
 - laravel/prompts (PROMPTS) - v0
 - laravel/mcp (MCP) - v0
 - laravel/pint (PINT) - v1
@@ -105,6 +108,54 @@ protected function isAccessible(User $user, ?string $path = null): bool
 ## Enums
 - Typically, keys in an Enum should be TitleCase. For example: `FavoritePerson`, `BestLake`, `Monthly`.
 
+=== tests rules ===
+
+## Test Enforcement
+
+- Every change must be programmatically tested. Write a new test or update an existing test, then run the affected tests to make sure they pass.
+- Run the minimum number of tests needed to ensure code quality and speed. Use `php artisan test --compact` with a specific filename or filter.
+
+=== folio/core rules ===
+
+## Laravel Folio
+
+- Laravel Folio is a file-based router. With Laravel Folio, a new route is created for every Blade file within the configured Folio directory. For example, pages are usually in `resources/views/pages/` and the file structure determines routes:
+    - `pages/index.blade.php` → `/`
+    - `pages/profile/index.blade.php` → `/profile`
+    - `pages/auth/login.blade.php` → `/auth/login`
+- You may list available Folio routes using `php artisan folio:list` or using the `list-routes` tool.
+
+### New Pages & Routes
+- Always create new `folio` pages and routes using `php artisan folio:page [name]` following existing naming conventions.
+
+<code-snippet name="Example folio:page Commands for Automatic Routing" lang="shell">
+    // Creates: resources/views/pages/products.blade.php → /products
+    php artisan folio:page "products"
+
+    // Creates: resources/views/pages/products/[id].blade.php → /products/{id}
+    php artisan folio:page "products/[id]"
+</code-snippet>
+
+- Add a 'name' to each new Folio page at the very top of the file so it has a named route available for other parts of the codebase to use.
+
+<code-snippet name="Adding Named Route to Folio Page" lang="php">
+use function Laravel\Folio\name;
+
+name('products.index');
+</code-snippet>
+
+### Support & Documentation
+- Folio supports: middleware, serving pages from multiple paths, subdomain routing, named routes, nested routes, index routes, route parameters, and route model binding.
+- If available, use the `search-docs` tool to use Folio to its full potential and help the user effectively.
+
+<code-snippet name="Folio Middleware Example" lang="php">
+use function Laravel\Folio\{name, middleware};
+
+name('admin.products');
+middleware(['auth', 'verified', 'can:manage-products']);
+?>
+</code-snippet>
+
 === laravel/core rules ===
 
 ## Do Things the Laravel Way
@@ -171,6 +222,13 @@ protected function isAccessible(User $user, ?string $path = null): bool
 
 ### Models
 - Casts can and likely should be set in a `casts()` method on a model rather than the `$casts` property. Follow existing conventions from other models.
+
+=== pennant/core rules ===
+
+## Laravel Pennant
+
+- This application uses Laravel Pennant for feature flag management, providing a flexible system for controlling feature availability across different organizations and user types.
+- Use the `search-docs` tool, in combination with existing codebase conventions, to assist the user effectively with feature flags.
 
 === pint/core rules ===
 
@@ -259,4 +317,32 @@ protected function isAccessible(User $user, ?string $path = null): bool
 | overflow-ellipsis | text-ellipsis |
 | decoration-slice | box-decoration-slice |
 | decoration-clone | box-decoration-clone |
+
+=== laravel/fortify rules ===
+
+## Laravel Fortify
+
+Fortify is a headless authentication backend that provides authentication routes and controllers for Laravel applications.
+
+**Before implementing any authentication features, use the `search-docs` tool to get the latest docs for that specific feature.**
+
+### Configuration & Setup
+- Check `config/fortify.php` to see what's enabled. Use `search-docs` for detailed information on specific features.
+- Enable features by adding them to the `'features' => []` array: `Features::registration()`, `Features::resetPasswords()`, etc.
+- To see the all Fortify registered routes, use the `list-routes` tool with the `only_vendor: true` and `action: "Fortify"` parameters.
+- Fortify includes view routes by default (login, register). Set `'views' => false` in the configuration file to disable them if you're handling views yourself.
+
+### Customization
+- Views can be customized in `FortifyServiceProvider`'s `boot()` method using `Fortify::loginView()`, `Fortify::registerView()`, etc.
+- Customize authentication logic with `Fortify::authenticateUsing()` for custom user retrieval / validation.
+- Actions in `app/Actions/Fortify/` handle business logic (user creation, password reset, etc.). They're fully customizable, so you can modify them to change feature behavior.
+
+## Available Features
+- `Features::registration()` for user registration.
+- `Features::emailVerification()` to verify new user emails.
+- `Features::twoFactorAuthentication()` for 2FA with QR codes and recovery codes.
+  - Add options: `['confirmPassword' => true, 'confirm' => true]` to require password confirmation and OTP confirmation before enabling 2FA.
+- `Features::updateProfileInformation()` to let users update their profile.
+- `Features::updatePasswords()` to let users change their passwords.
+- `Features::resetPasswords()` for password reset via email.
 </laravel-boost-guidelines>

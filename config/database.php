@@ -43,6 +43,22 @@ return [
             'transaction_mode' => 'DEFERRED',
         ],
 
+        /*
+        |--------------------------------------------------------------------------
+        | Activity Log Database Connection
+        |--------------------------------------------------------------------------
+        |
+        | A separate SQLite database for storing activity logs / audit trail.
+        | This demonstrates using multiple database connections in Laravel.
+        |
+        */
+        'activity_log' => [
+            'driver' => 'sqlite',
+            'database' => env('ACTIVITY_LOG_DATABASE', database_path('activity_log.sqlite')),
+            'prefix' => '',
+            'foreign_key_constraints' => true,
+        ],
+
         'mysql' => [
             'driver' => 'mysql',
             'url' => env('DB_URL'),
