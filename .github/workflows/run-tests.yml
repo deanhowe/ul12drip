@@ -57,6 +57,9 @@ jobs:
       - name: Copy environment file
         run: cp .env.example .env
 
+      - name: Create the activity_log.sqlite database
+        run: touch database/activity_log.sqlite
+
       - name: Generate application key
         run: php artisan key:generate
 
