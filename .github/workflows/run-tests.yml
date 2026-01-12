@@ -15,7 +15,7 @@ jobs:
       matrix:
         os: [ubuntu-latest]
         php: [8.4]
-        stability: [prefer-stable]
+        stability: [prefer-dist]
 
     name: P${{ matrix.php }} - ${{ matrix.stability }} - ${{ matrix.os }}
 
