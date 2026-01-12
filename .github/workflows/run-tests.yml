@@ -58,12 +58,12 @@ jobs:
         run: cp .env.example .env
 
       - name: Generate application key
-        run: |
-          php artisan key:generate
-          touch ./database/activity_log.sqlite
+        run:  touch ./database/activity_log.sqlite
 
       - name: Run migrations
-        run: php artisan migrate --force
+        run: |
+          php artisan key:generate
+          php artisan migrate --force
 
       - name: Execute tests
         run: php artisan test
